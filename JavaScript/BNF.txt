@@ -1,0 +1,54 @@
+"a"
+
+"b"
+
+<Program>::= "a"+ | "b"+
+
+<Program>::= <Program>"a"+ | <Program>"b"+
+
+# 加法
+
+<Number> ::= "0" | "1" | "2" | ... | "9"
+
+<DecimalNumber> ::= "0" |  {{"1" | "2" | ... | "9"} "+" <Number>* }
+
+<Expression> ::= <DecimalNumber> | <Expression> "+" <DecimalNumber>
+
+# 四则运算
+
+<Number> ::= "0" | "1" | "2" | ... | "9"
+
+<DecimalNumber> ::= "0" | (("1" | "2" | "3" | ... | "9") "+" <Number>* )
+
+<PrimaryExpress> ::= <DecimalNumber> |
+  "(" <logicalExpress> ")"
+
+<AddtiveExpression> ::= 
+  <DecimalNumber> | 
+  <AddtiveExpression> "+" <DecimalNumber> |
+  <AddtiveExpression> "-" <DecimalNumber>
+
+<MultiplicativeExpression> ::= 
+  <DecimalNumber> | 
+  <MultiplicativeExpression> "*" <DecimalNumber> |
+  <MultiplicativeExpression> "/" <DecimalNumber>
+
+1 + 2 * 3
+
+<AddtiveExpression> ::= 
+  <MultiplicativeExpression> |
+  <AddtiveExpression> "+" <MultiplicativeExpression>
+
+<LogicalExpression> ::= <AddtiveExpression> | 
+  <LogicalExpression> "||" <AddtiveExpression> |
+  <LogicalExpression> "&&" <AddtiveExpression>
+
+# for 循环
+
+<FORSTATEMENT> ::=
+  "for" "(" ( variable_declaration |
+  ( expression ";") |
+  (";") )
+  [ expression ] ";"
+  [ expression]
+  ")" statement

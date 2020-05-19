@@ -25,8 +25,7 @@
 
 <AddtiveExpression> ::= 
   <DecimalNumber> | 
-  <AddtiveExpression> "+" <DecimalNumber> |
-  <AddtiveExpression> "-" <DecimalNumber>
+  <AddtiveExpression> "+" <DecimalNumber>
 
 <MultiplicativeExpression> ::= 
   <DecimalNumber> | 
@@ -37,7 +36,8 @@
 
 <AddtiveExpression> ::= 
   <MultiplicativeExpression> |
-  <AddtiveExpression> "+" <MultiplicativeExpression>
+  <AddtiveExpression> "+" <MultiplicativeExpression> |
+  <AddtiveExpression> "-" <MultiplicativeExpression>
 
 <LogicalExpression> ::= <AddtiveExpression> | 
   <LogicalExpression> "||" <AddtiveExpression> |
@@ -52,3 +52,64 @@
   [ expression ] ";"
   [ expression]
   ")" statement
+
+# BNF 表示 BNF 规则
+
+<Syntax> ::= 
+  <Rule> |
+  <Rule> <Syntax>
+
+<Rule> ::= 
+  <Opt-Whitespace> "<" <Rule-Name> ">" <Opt-Whitespace> "::=" <Opt-Whitespace> <Expression> <Line-End>
+
+<Opt-Whitespace> ::=
+  " " <Opt-Whitespace> | 
+  ""
+
+<Expression> ::=
+  <List> |
+  <List> <Opt-Whitespace> "|" <Opt-Whitespace> <Expression>
+
+<Line-End> ::=
+  <Opt-Whitespace> <EOL> |
+  <Line-End> <Line-End>
+
+<List> ::=
+  <Term> | <Term> <Opt-Whitespace> <List>
+
+<Term> ::=
+  <Literal> |
+  "<" <Rule-Name> ">"
+
+<Literal> ::=
+  '"'<Text1>'"' |
+  "'"<Text2>"'"
+
+<Text1> ::=
+  "" |
+  <Character1> <Text1>
+
+<Text2> ::=
+  "" |
+  <Character2> <Text2>
+
+<Character> ::=
+  <Letter> |
+  <digit> |
+  <Symbol>
+
+# classic expression grammar
+
+<Expressiion> ::=
+  <Term> |
+  <Term> "+" <Expression>
+
+<Term> ::=
+  <Factor> |
+  <Factor> "*" <Term>
+
+<Factor> ::=
+  "(" <Expression> ")" |
+  <Const>
+
+<Const> ::= <Integer>

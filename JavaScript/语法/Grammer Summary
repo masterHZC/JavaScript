@@ -1,0 +1,16 @@
+SourceCharater::
+    any Unicode point
+
+InputElementDiv::
+    WhiteSpace
+    LineTerminator
+    Comment
+    CommonToken
+    DivPunctuator
+    RightBracePunctuator
+
+LineTerminator::
+    <LF> ?
+    <CR> ?
+    <LS> ?
+    <PS> ?

@@ -1,0 +1,5 @@
+关于JavaScript中的数字
+JavaScript的Number类型 采用的是IEEE754的64位双精度浮点类型，这64位的精度分为三个部分
+    Sign: 1         正负
+    Exponent: 11    科学计数法
+    Significand: 53 有效数字 (实际上只有52位)

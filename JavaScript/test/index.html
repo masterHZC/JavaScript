@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        var maxArea = function (height) {
+            // area = x * y
+            // 解法 1
+            // x max start -> find bigger y
+            let j = height.length - 1
+            let i = 0
+            let max = 0
+            let x = 0
+            let y = 0
+            let maxHeight = 0
+            while (j > i) {
+                // 计算当前轮次的最大面积
+                x = j - i
+                y = Math.min(height[i], height[j])
+                max = Math.max(max, x * y)
+                debugger;
+                if (height[i] > height[j]) {
+                    // while (height[j] < height[i] && j > i) {
+                    j--
+                    // }
+                } else {
+                    // while (height[i] <= height[j] && j > i) {
+                    i++
+                    // }
+                }
+            }
+            return max
+        };
+        const result = maxArea([1, 2, 4, 3])
+        console.log(result)
+    </script>
+</body>
+
+</html>

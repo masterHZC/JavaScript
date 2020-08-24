@@ -1,0 +1,5 @@
+1. 关于字符串的难点是关于unicode的转化和使用
+2. 关于number的难点是16位双浮点的精度问题
+3. JavaScript定义的语发
+4. JavaScript定义的词法（大概的轮廓）
+5. 7中基本数据类型中的symbol

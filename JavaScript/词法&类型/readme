@@ -3,7 +3,7 @@ JavaScript
 Lexical Grammar
     
 1. SourceCharater   Unicode
-    Unicode是一个字符集，通过码点将每一个字符映射到一个正整数上，比如A: 41, a: 61。ASCII字符集是一种比较早期的字符集，一共是128个，基本上所有字符集都会兼容ASCII，同样Unicode字符集也兼容了ASCII。其中U+0000-U+007F（128）就是ASCII字符集 
+    Unicode是一个字符集，通过码点将每一个字符映射到一个正整数上。ASCII字符集是一种比较早期的字符集，一共是128个，基本上所有字符集都会兼容ASCII，同样Unicode字符集也兼容了ASCII。其中U+0000-U+007F（128）就是ASCII字符集 
 
     U+000A LF
     U+0020 SPACE
@@ -19,7 +19,7 @@ Lexical Grammar
 
     最后说JavaScript使用的编码类型是什么？
 
-    JavaScript使用的编码类型是UCS-2。在JavaScript诞生的时候采用了UCS-2这种编码方式，UCS-2是一种支持16位的编码。之后UTF-16替代了UCS-2，也就是UCS-2被归到了UTF-16中。所以JavaScript使用的编码方式是UTF-16但并不是全部支持。所以造成JavaScript的所有字符都是2个字节的，如果是4字节的字符就会被当作两个双字节的字符。
+    JavaScript使用的编码类型是UCS-2。在JavaScript诞生的时候采用了UCS-2这种编码方式，UCS-2是一种支持16位的编码。之后UTF-16替代了UCS-2，将UCS-2归到了UTF-16之中。所以JavaScript使用的编码方式是UTF-16但并不是全部支持。所以造成JavaScript的所有字符都是2个字节的，如果是4字节的字符就会被当作两个双字节的字符。
     因为UTF-16是由D800-DFFF这个范围的字节重新匹配的，所以造成了一下的问题
         1. 一个超过两个字节的字符 无法正确的匹配自己的UTF-16编码
         2. 不能通过 charAt(0) 匹配出第一个字符 （因为基本平面的映射的码点都没有具体含义都是空字符串）

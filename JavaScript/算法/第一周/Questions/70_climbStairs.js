@@ -12,7 +12,7 @@ var climbStairs = function (n) {
     let result = 0
     result = calculationN(n)
     return result
-};
+}
 
 function calculationN(n) {
     if (n === 1 || n === 0) return 1
@@ -29,7 +29,7 @@ var climbStairs = function (n) {
         result.push(result[0], result[1])
     }
     return result.pop()
-};
+}
 
 var climbStairs = function (n) {
     // f(x) = f(x-1) + f(x-2)
@@ -43,7 +43,7 @@ var climbStairs = function (n) {
         r = q + p
     }
     return r
-};
+}
 
 var climbStairs = function (n) {
     // f(x) = f(x-1) + f(x-2)
@@ -52,4 +52,4 @@ var climbStairs = function (n) {
     const sqrt_5 = Math.sqrt(5)
     const fib_n = Math.pow((1 + sqrt_5) / 2, n + 1) - Math.pow((1 - sqrt_5) / 2, n + 1)
     return Math.round(fib_n / sqrt_5)
-};
+}

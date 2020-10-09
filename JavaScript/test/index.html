@@ -60,7 +60,42 @@
             }
             return maxArea
         }
-        console.log(largestRectangleArea([1]))
+        // console.log(largestRectangleArea([1]))
+    </script>
+    <script>
+        var lengthOfLongestSubstring = function(s) {
+            if (!s) return 1
+            let max = 1;
+            let j = 0
+            let setO = new set()
+            const len = s.length
+            // 查找的位置 i
+            // 重复的位置 j
+            /*
+                外层循环确定 开始查找的位置
+                内层循环确定 重复的位置
+                max = Math.max(max, j - i)
+            */
+            for (let i = 0; i < n; i++) {
+
+                // 重复的位置
+                j = i + 1
+                setO.add(s[i])
+                while(j < n) {
+                    if (setO.has(s[j])) {
+                        setO.clear()
+                        break
+                    }
+                    setO.add(s[j])
+                    j++
+                }
+
+                // 遇到 s 重复的元素
+                max = Math.max(max, j - i)
+            }
+            return max;
+        };
+        console.log(lengthOfLongestSubstring("abcabcbb"));
     </script>
 </body>
 

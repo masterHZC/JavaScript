@@ -1,13 +1,9 @@
 study list
-
-  algorithm   
-
-  basics      
-
-  refactoring
-
-  --------------------------
-  9.30
-    1. 重构：第三章
-    2. 数帽子问题 总结
-    3. es6+
+  编程：
+    重构
+    设计模式
+    clean code
+    正则
+    面向对象
+    JavaScript编程艺术
+    函数式编程

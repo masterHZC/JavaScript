@@ -1,0 +1,16 @@
+<script>
+  function NumberToString(number, x = 10) {
+    // 进制
+    var integer = Math.floor(number)
+    var fraction = number - integer
+    var string = ''
+    while(integer > 0) {
+      string = integer % x + string;
+      integer = Math.floor(integer / x);
+    }
+    return string
+  }
+
+  NumberToString(100)
+
+</script>

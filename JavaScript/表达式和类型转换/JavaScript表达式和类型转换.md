@@ -70,3 +70,40 @@ Tree vs Priority
   + ~ a
   + ! a
   + await a
+```
+  语句使用 if else
+  表达式使用三元表达式
+```
+
+#### Boxing & Unboxing
+  + ToPrimitive
+  + toString valueOf
+
+```
+  constructor
+  prototype
+  __proto__
+  instanceof
+```
+
+Boxing: String、Number、Boolean、Symbol类型转化成对象类型
+Unboxing(引式转换的过程): Symbol.toPrimitive || valueOf > toString
+> 如果有toPrimitive，只调用Primitive；如果没有toPrimitive，调用valueOf和toString
+
+```js
+  1 + {[Symbol.toPrimitive](){return 1}, valueOf(){return 2}, toString(){return 3}}
+  // 2
+  1 + {[Symbol.toPrimitive](){return {}}, valueOf(){return 2}, toString(){return 3}}
+  // TypeError: Cannot convert object to primitive value
+  1 + {valueOf(){return {}}, toString(){return 3}}
+  // 4
+  1 + {valueOf(){return {}}, toString(){return {}}}
+  // TypeError: Cannot convert object to primitive value
+```
+
+### question
+
+StringToNumber
+
+NumberToString
+

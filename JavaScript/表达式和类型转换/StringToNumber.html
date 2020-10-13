@@ -1,0 +1,103 @@
+<script>
+  // 二进制 十进制 十六进制
+  function convertStringToNumber1(string, x = 10) {
+    var chars = string.split('');
+    let number = 0
+    for(let i = 0; i < chars.length; i++) {
+      // 11进制到 36进制 a-z
+      number = number * x
+      number += chars[i].codePointAt(0) - '0'.codePointAt(0)
+    }
+    return number
+  }
+  // convertStringToNumber1('100')
+
+</script>
+
+<script>
+  function convertStringToNumber2(string, x = 10) {
+    var chars = string.split('');
+    var number = 0
+    var i = 0
+    // 处理整数
+    // number * 10
+    while(i < chars.length && chars[i] !== '.') {
+      number = number * x
+      number += chars[i].codePointAt(0) - '0'.codePointAt(0)
+      i++
+    }
+    // 处理点
+    if (chars[i] === '.') i++;
+    // 处理小数
+    // 数字 / 10
+    var decimal = 1
+    while(i < chars.length) {
+      decimal = decimal / x
+      number += (chars[i].codePointAt(0) - '0'.codePointAt(0)) * decimal
+      i++
+    }
+    return number
+  }
+  // convertStringToNumber2('100')
+</script>
+
+<script>
+  function convertStringToNumber3(string, x = 10) {
+    var chars = string.split('');
+    var number = 0
+    var i = 0
+    var multiple = 0
+    var flag = false
+    // 处理整数
+    // number * 10
+    // - / +
+    while(i < chars.length) {
+      if (chars[i] !== '.') {
+        number = number * x
+        number += chars[i].codePointAt(0) - '0'.codePointAt(0)
+        flag && multiple++
+      } else {
+        flag = true
+      }
+      i++
+    }
+    console.log(multiple);
+    while(multiple) {
+      number = number / 10
+      multiple--
+    }
+    return number
+  }
+  // convertStringToNumber3('100')
+</script>
+
+<script>
+  // 二进制 有效数字只有 1|0 不支持小数
+  // 16进制 0-9 a-f 不支持小数
+  function convertStringToNumber4(string, x = 10) {
+    var chars = string.split('');
+    var number = 0
+    var i = 0
+    var multiple = 0
+    var flag = false
+    // 处理整数
+    // number * 10
+    // - / +
+    while(i < chars.length) {
+      if (chars[i] !== '.') {
+        number = number * x
+        number += chars[i].codePointAt(0) - '0'.codePointAt(0)
+        flag && multiple++
+      } else {
+        flag = true
+      }
+      i++
+    }
+    while(multiple) {
+      number = number / x
+      multiple--
+    }
+    return number
+  }
+  convertStringToNumber4('100')
+</script>

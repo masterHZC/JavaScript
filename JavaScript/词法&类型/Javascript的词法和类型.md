@@ -25,7 +25,6 @@ JavaScript的Number语法分为两类，分别是小数型的语法和整数型�
     12.3E10      // 123000000000
 ```
 ### Number Conversions
-ECMA标准对Number又非常明确的定义，下面就是跟着ECMA定义的标准对Number类型进行解析
 ```
     StringNumericLiteral::
         StrWhiteSpace |

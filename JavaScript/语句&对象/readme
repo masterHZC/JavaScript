@@ -1,0 +1,39 @@
+Type Conversion
+
+ToPrimitive方法接受两个参数，`input`和`preferredType`。
+`input`需要进行类型转化的值，最终会转化成一个基础类型的值
+`preferredType`，当对象有能力转换成多种基础类型是，传入的第二参数来指定转换的类型
+
+所有的类型转化都会根据一下算法来进行
+
+ToPrimitive
+
+1. Assert: input is an ECMAScript language value
+2. 如果需要转化的类型是一个对象遵循一下规则
+  -------------------------------------------------------- set hint
+  a. 不存在PreferredType 参数, hint 为 "default"
+  b. PreferredType 为 String, hint 为 "string"
+  c. PreferredType 为 Number, hint 为 "number"
+  -------------------------------------------------------- @@toPrimitive
+  d. 将 exoticToPrim 设置为 input的@@toPrimitive方法
+  e. 如果 exoticToPrim 不是 undefind
+      i   调用Call(exoticToPrim, input, <hint>) 将返回值 赋值给result
+      ii  如果 result 是一个基本值 返回
+      iii 否则直接 throw typeerror
+  f. 如果hint 为 "default"，那么将hint设置为"number"
+  -------------------------------------------------------- OrdinaryToPrimitive
+  g. 返回 OrdinaryToPrimitive(input, hint)
+
+  ----------------------------------------------------------------------------------------
+
+  OrdinaryToPrimitive(O, hint)
+    1. Assert: Type(O) is Object
+    2. Assert: Type(hint) is String and value is eight "string" or "number"
+    3. if hint is "string" toString > valueOf
+    4. else hint is not "string" valueOf > toString
+    5. For each name in methodNames in List order, do
+      a. Let method be Get(O, name).
+      b. If IsCallable(method) is true, then
+        i. Let result be ? Call(method, O).
+        ii. If Type(result) is not Object, return result.
+    6. Throw a TypeError exception.

@@ -72,8 +72,8 @@
 </script>
 
 <script>
-  // 二进制 有效数字只有 1|0 不支持小数
-  // 16进制 0-9 a-f 不支持小数
+  // 二进制 0b 八进制 0o|0 十进制  十六进制 0x
+  // 二进制 八进制 十六进制 不支持小数
   function convertStringToNumber4(string, x = 10) {
     var chars = string.split('');
     var number = 0
@@ -100,4 +100,27 @@
     return number
   }
   convertStringToNumber4('100')
+</script>
+
+<script>
+  function convertStringToNumber (string) {
+    // var DecimalReg = //
+  }
+
+  function convertStringToDecimal(string) {
+    // 0~9 . e - +
+  }
+
+  function convertStringToBinary(string) {
+    // 0b 0 1
+  }
+
+  function convertStringToOct(string) {
+    // 0o 0～7
+  }
+
+  function convertStringToHex(string) {
+    // 0x 0～9 a~f
+  }
+
 </script>

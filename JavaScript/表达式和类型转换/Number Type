@@ -1,0 +1,63 @@
+Number Type 
+  遵循IEEE754-2008双浮点16进制的标准，表示整数和浮点数
+  有效数字类型的值的总数 2^64 - 2^53 + 3
+  其中，IEEE754无法用数字表示的值"Not-a-Number"，统一被表示为NaN
+  NaN 之间互不相等 NaN 占用的数字是 9007199254740990 (2^53 - 2)
+  另外两个特殊的值是，+Infinity 和 -Infinity 用来表示正负无穷
+  出去以上三个特殊的值 一共有2^64-2^53个有限数字
+  正负分成相等的两个部分，每一个整数都对应相等位数的负数，包括+0，-0
+  +0，-0可以通过 出一个一个数字的值是 +Infinity 还是 -Infinity来区分
+  非零的数字一共有2^64-2^53-2个，可以用一下方式表示：
+    s * m * 2^e
+    s 的值为 -1或+1
+    m 值范围在 2^52~2^53 之间的正整数
+    e 值范围是 -1074~971 之间的整数
+  其中 2^53-2个 "Not-a-Number" 类型的数字表示:
+    s 的值为 -1或+1
+    m 值范围在 小于2^52 的正整数
+    e 值是 -1074
+  所有不大于2^53部分的整数都可以用Number来表示
+  `x是一个Number类型`中的x，必须是可以精确表示的Number的值
+  Number类型的值范围 (出去-0) 2^1024~2^-1024，选择其中最接近x的大小的值来表示x的值（并没有完全等于）；如果两个数字同样接近x的值，选择具有偶数特性的值
+  2^1024将被解析成 +Infinity，-2^1024被解析成-Infinity
+  如果在某次运算中，结果为Infinity将不会参加下一次的运算
+  通过isFinite检测某个值是不是有效范围内的有限的值
+  Number.POSITIVE_INFINITY 可以得到 +Infinity
+  Number.NEGATIVE_INFINIT 可以得到 -Infinity
+  支持科学计数法
+  Number.MAX_VALUE，Number_MIN_VALUE
+  Number类型之间的+/-/*/\/计算 之后的值之间的比较 使用 Number.EPSILON
+  ```
+    Math.abs(0.1+0.2-0.3)<=Number.EPSILON
+  ```
+  Number.MAX_SAFE_INTEGER 表示最大的 `安全整数`值为 (2^53-1), Number.MIN_SAFE_INTEGER 表示最小的 `安全整数`(-(2^53-1))
+  `安全整数`:
+    1. 可以准确地表示为一个IEEE-754双精度数字,
+    2. 在任何 IEEE-754 舍入模式（rounding mode）下，没有其他整数舍入结果为该整数。
+  ```
+    安全整数：符合IEEE-754标准，不会通过 IEEE-754 舍入模式得出和其他IEEE-754标准中相同数字
+    2^53 的值为 9007199254740992，2^53+1 的值舍入之后也是9007199254740992
+    2^53 === 2^53+1 true
+    所以，安全数字的范围在 -(2^53-1) ~ 2^53 - 1
+  ```
+  Number.isSafeInteger 检测一个数字是不是 `安全数字`
+
+Number Literals
+http://www.ecma-international.org/ecma-262/10.0/index.html#prod-BinaryIntegerLiteral
+  四种表示方式：10进制 2进制 8进制 16进制
+  10进制(Decimal)：
+    Infinity
+    10.
+    10.1
+    10.(e|E)(-?)1
+    .1(e|E)(-?)1
+    10(e|E)(-?)1
+  2进制(Binary)：
+    有效数字：0 1
+    0b01
+  8进制(Oct):
+    有效数字 0～7
+    0o05
+  16进制(Hex)
+    0123456789(abcdef|ABCDEF)
+    0x18

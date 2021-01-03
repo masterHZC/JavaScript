@@ -1,0 +1,101 @@
+<html>
+  <h1>帅
+  <p><b class=x1><b class=x2><b><b class=x3><b class=x4><b>X
+  <p>X
+  <p><b><b class=x5><b>X
+  <p></b></b></b></b></b></b>X
+</html>
+<script>
+const EOF = Symbol('eof') // End Of File
+let token = null
+
+// <html></html>
+// <br/>
+function nextToken(chars) {
+  let state = data
+  for (c of chars) {
+    state = state(c)
+  }
+  return state === emitEndToken(EOF)
+}
+
+function data(c) {
+  if (c === '<') {
+    return tagOpen
+  }
+  return errorTag
+}
+
+function tagOpen (c) {
+  if (c === '/') return endTagOpen
+  if (/[a-zA-Z]/.test(c)) {
+    token = new StartTagToken()
+    token.name = c.toLowerCase()
+    return tagName
+  }
+  return errorTag
+}
+
+function endTagOpen (c) {
+  if (/[a-zA-Z]/.test(c)) {
+    token = new EndTagToken()
+    token.name = c.toLowerCase()
+    return endTagName
+  }
+  return errorTag
+}
+
+function tagName (c) {
+  if (isASCIIAlpha(c)) {
+    token.name += c.toLowerCase()
+    return tagName
+  }
+  if  (c === '/') {
+    return selfClosingTag
+  }
+  if (c === '>') {
+    return data
+  }
+  return errorTag
+}
+
+function endTagName(c) {
+  if (isASCIIAlpha(c)) {
+    token.name += c.toLowerCase()
+    return endTagName
+  }
+  if (c === '>') {
+    return emitEndToken(EOF)
+  }
+  return errorTag
+}
+
+function selfClosingTag (c) {
+  if (c === '>') {
+    endToken = new EndTagToken()
+    endToken.name = token.name
+    return emitEndToken(EOF)
+  }
+  return errorTag
+}
+
+function emitEndToken(c) {
+  if (c === EOF) return emitEndToken
+  return data
+}
+
+class StartTagToken {}
+
+class EndTagToken {}
+
+class Attribute {}
+
+function errorTag(c) {
+  return errorTag
+}
+
+function isASCIIAlpha(c) {
+    return (c >= "a" && c <= "z") || (c >= "A" && c <= "Z");
+}
+
+</script>

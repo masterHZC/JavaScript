@@ -1,0 +1,35 @@
+<script>
+  class PersonClass {}
+
+  let PersonType = void (function () {
+    'use strict'
+
+    const PersonType = (name) => {
+      if (!new.target) throw new Error('Constructor must be called with new')
+      this.name = name
+    }
+
+    Object.defineProperty(PersonType.prototype, 'sayName', {
+      value () {
+        if (new.target) throw new Error('Methods cannot be called with new')
+        console.log(this.name)
+      },
+      enumerable: false,
+      writable: true,
+      configurable: true
+    })
+
+    return PersonType
+  })
+
+  // class 不可提升
+  // class 内部无法被重写
+  // 只能被 new 调用
+  // 实例方法 不能 new 调用
+  // 内部在严格模式下运行
+  // 方法不可枚举
+
+  // 创建私有属性 属性名通过 Symbol 创建
+  // 通过Reflect.ownKeys 获取
+
+</script>

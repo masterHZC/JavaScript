@@ -27,8 +27,4 @@
 
 ## 声明
 
-问题：
-
-1. 声明做了什么
-2. 
-
+https://www.cnblogs.com/winter-cn/archive/2009/12/07/1618281.html

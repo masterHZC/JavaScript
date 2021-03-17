@@ -1,0 +1,47 @@
+一些有意思的语法
+
+Nullish value:
+  当一个变量的值是 null 或 undefined 时候该变量的值就是nullish
+
+可选链式操作符：
+  var obj = {
+    a: 'a',
+    b: {
+      b: 'b'
+    }
+  }
+
+  var result = obj.a.a // 报错
+  var result = obj.a?.a // undefined
+  // 或者使用[]方式访问属性
+  var result = obj.b?.['b'] // b
+  var result = obj.b?.['bb'] // undefined
+
+-----------------------------------------------
+
+控制操作符?? :
+  使用 || 的时候需要判断左边隐式转化的值为false，这样有一些场景使用起来非常麻烦
+  使用 ?? 只有当左侧的值是 nullish 的时候才会返回右侧的值
+  
+  0 || 'all right' // all right
+  0 ?? 'all right' // 0
+
+-----------------------------------------------
+
+使用空值合并操作符：
+let customer = {
+  name: "Carl",
+  details: { age: 82 }
+};
+let customerCity = customer?.city ?? "暗之城";
+console.log(customerCity); // “暗之城”
+
+-----------------------------------------------
+
+逻辑空赋值 (??=)：
+  逻辑空赋值运算符 (x ??= y) 仅在 x 是 nullish 时对其赋值
+
+逻辑或赋值 (||=)
+  x ||= y 只有x在隐式转换之后为false的时候 才赋值y
+
+-----------------------------------------------

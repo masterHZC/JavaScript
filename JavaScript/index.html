@@ -1,0 +1,51 @@
+<script>
+  var rotate = function(nums, k) {
+  const tem = []
+  const len = nums.length
+  const g = len - k
+  let prev
+  for (let i = 0; i < len; i++) {
+    if (i < g) tem.push(nums[i])
+    // 换位置
+    if (len - i - g > 0) nums[i] = nums[i + g]
+    else nums[i] = tem[i + g - len]
+  }
+  return nums
+}
+
+// console.log(rotate([1, 2, 3], 4))
+</script>
+
+
+<script>
+  var less = 18
+  var bigger = 20
+  var best = 23
+  var changeLess = 26
+  var changeBigger = 28
+  var list = [less, bigger, best, changeLess, changeBigger]
+  var mouthEnd = 14
+  var mouthBegin = 3
+  var target = 300
+
+  function total(prev, mouth, next, target, prevSpc, nextSpc) {
+    var sum = 0
+    console.log(prev, mouth - mouthBegin + 1)
+    sum += (mouth - mouthBegin + 1) * prev
+    if (mouth > 5) {
+      sum += prevSpc ? prev * 2 : prev
+    }
+    console.log(next, mouthEnd - mouth)
+    sum += (mouthEnd - mouth) * next
+    sum += nextSpc ? next * 2 : next
+    console.log(sum, target)
+    return {
+      sum,
+      achieve: sum >= target
+    }
+  }
+
+
+
+
+</script>

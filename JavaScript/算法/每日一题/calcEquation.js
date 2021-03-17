@@ -6,15 +6,16 @@
  * @desc https://leetcode-cn.com/problems/evaluate-division/
  */
 var calcEquation = function(equations, values, queries) {
-  for (let i = 0; i < queries.length - 1; i++) {
-    // 值去查 equation
-    // 两个都是除数 那么被除数相同 然后两数相除
-    // 两个都是被除数 那么 除数相同 然后 两数相除
-    // 一个除数一个是被除数 两数相乘
-    // 广度优先
-    for (let j = 0; j < equations.length; j++) {
-      equations[j][0]
-      queries[i]
+  const equMap = {}
+  for (let i = 0; i < equations.length - 1; i++) {
+    // 1. 统一集合
+    // equations[i][0] equations[i][1]
+    const eque = equations[i]
+    // 如果map中不存在某一个参数 那么添加一个参数
+    // 如果已经存在 那么在参数中在加一个数
+    if (!equMap[eque[0]]) {
+      equMap[eque[0]] = []
     }
+    equMap[eque[0]].push({ eque[1]: values[i] })
   }
 }

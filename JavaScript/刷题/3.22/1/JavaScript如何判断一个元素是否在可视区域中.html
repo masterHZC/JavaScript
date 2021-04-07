@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JavaScript如何判断一个元素是否在可视区域中</title>
+</head>
+<style>
+body {
+  /* overflow: hidden; */
+}
+.container {
+    display: flex;
+    flex-wrap: wrap;
+
+}
+.parent {
+  height: 100vh;
+  overflow: auto;
+  position: relative;
+}
+.target {
+    margin: 5px;
+    width: 200px;
+    height: 20px;
+    border: 1px solid red;
+}
+</style>
+<body>
+  <!-- <div class="parent"> -->
+    <div class="container"></div>
+  <!-- </div> -->
+</body>
+<script>
+  const $ = document.querySelectorAll.bind(document)
+  const con = $('.container')[0]
+  const children = new Array(1000).fill('<div class="target"></div>').join('')
+  con.innerHTML = children
+  window.addEventListener('scroll', (e) => {
+    // markBackgroundColor()
+    // listenerCon()
+  })
+
+  const $targets = $('.target');
+
+  $targets[$targets.length - 1].innerText = 'last one'
+
+  const observer = new IntersectionObserver(listener, { threshold: 1 })
+
+  observer.observe($targets[$targets.length - 1])
+
+function listener(entries, observer) {
+  console.log(entries);
+}
+
+  function markBackgroundColor() {
+    Array.from($targets).forEach(child => {
+      if (isInViewPortDOMRect(child)) {
+        child.style.backgroundColor = 'yellow'
+      }
+    })
+  }
+  
+  // const parent = $('.target')[0].offsetParent
+  // const overflowY = window.getComputedStyle(parent)['overflow-y'];
+  // const overflowX = window.getComputedStyle(parent)['overflow-x'];
+  // console.log(overflowY, overflowX)
+
+  function isInViewPortOne(el) {
+    // offset 与 offsetParent 之间的距离
+    // scroll 滚动的距离
+    // client 内部width + padding
+    // offsetTop - scrollTop <= viewPortHeight
+    const viewPortHeight = window.innerHeight || document.documentElement.clientHeight || document.body.clentHeight
+    const offsetTop = el?.offsetTop || 0
+    const scrollTop = document.documentElement.scrollTop || document.body.scrollTop
+    return offsetTop - scrollTop <= viewPortHeight - 50
+  }
+
+  function isInViewPortDOMRect(el) {
+    // width/height + padding + border-width 盒子模型
+    // width/height box-sizing: border-box
+    const viewPortHeight = window.innerHeight || document.documentElement.clientHeight || document.body.clentHeight
+    const top = el.getBoundingClientRect().top // 距离窗口的距离
+    return top - viewPortHeight === 0
+  }
+
+  function isInViewPortObserver(el) {
+    // const options = {
+      // 表示重叠面积占被观察者的比例，从 0 - 1 取值，
+      // 1 表示完全被包含
+      // threshold: 1.0, 
+      // root:document.querySelector('#root') // 必须是目标元素的父级元素
+    // }
+    const observer = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        entry.target.style.backgroundColor = 'yellow'
+      })
+    }, { threshold: 1.0 })
+
+    // observer.observe(el)
+
+    Array.from($targets).forEach((element) => {
+      observer.observe(element)
+    })
+  }
+  
+</script>
+</html>

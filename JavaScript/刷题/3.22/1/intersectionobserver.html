@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IntersectionObserver</title>
+</head>
+<style>
+body {
+  /* overflow: hidden; */
+  margin: 0;
+  padding: 0;
+}
+.container {
+    display: flex;
+    flex-wrap: wrap;
+
+}
+.parent {
+  height: 100vh;
+  overflow: auto;
+  position: relative;
+}
+.target {
+    margin: 5px;
+    width: 200px;
+    height: 20px;
+    border: 1px solid red;
+}
+</style>
+<body>
+  <!-- <div class="parent"> -->
+    <div class="container"></div>
+  <!-- </div> -->
+</body>
+<script>
+  /*
+    场景：
+    图片懒加载——当图片滚动到可见时才进行加载
+    内容无限滚动——也就是用户滚动到接近内容底部时直接加载更多，而无需用户操作翻页，给用户一种网页可以无限滚动的错觉
+    检测广告的曝光情况——为了计算广告收益，需要知道广告元素的曝光情况
+    在用户看见某个区域时执行任务或播放动画
+  
+  */
+  const $ = document.querySelectorAll.bind(document)
+  const con = $('.container')[0]
+  const children = new Array(1000).fill('<div class="target"></div>').join('')
+  con.innerHTML = children
+  window.addEventListener('scroll', (e) => {
+    // markBackgroundColor()
+  })
+
+  const $targets = $('.target');
+  const observer = new IntersectionObserver(listener, { threshold: 1 })
+  Array.from($targets).forEach(child => {
+    observer.observe(child)
+  })
+  // observer.observe($targets[$targets.length - 1])
+  // $targets[$targets.length - 1].innerText = 'last one'
+
+
+function listener(entries, observer) {
+  console.log(entries);
+  entries.forEach(item => {
+    if (item.isIntersecting) {
+      item.target.style.backgroundColor = 'yellow'
+    } else {
+      item.target.style.backgroundColor = 'white'
+    }
+  })
+}
+
+function markBackgroundColor() {
+  Array.from($targets).forEach(child => {
+    if (isInViewPortDOMRect(child)) {
+      child.style.backgroundColor = 'yellow'
+    } else {
+      child.style.backgroundColor = ''
+    }
+  })
+}
+
+function isInViewPort(node) {
+
+}
+
+
+
+
+  
+</script>
+</html>

@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>视口高度</title>
+</head>
+<style>
+
+html {
+  /* height: 100%;
+  overflow: hidden; */
+  padding: 20px;
+  margin: 20px;
+  /* border: 20px solid #f0f; */
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  /* overflow: hidden; */
+  /* overflow: auto; */
+  /* height: 100% */
+}
+
+.parent {
+  /* height: 100%; */
+  overflow: auto;
+  position: relative;
+  margin: 20px;
+  border: 20px solid #f0f;
+}
+
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  /* padding: 20px;
+  margin: 20px;
+  border: 20px solid #f0f; */
+}
+
+.target {
+    margin: 5px;
+    width: 200px;
+    height: 20px;
+    border: 1px solid red;
+}
+</style>
+<body>
+  <!-- <div class="parent"> -->
+    <div class="container"></div>
+  <!-- </div> -->
+</body>
+<script>
+  const $ = document.querySelectorAll.bind(document)
+  const con = $('.container')[0]
+  const children = new Array(1000).fill('<div class="target"></div>').join('')
+  con.innerHTML = children
+  let timer = null
+  const parent = $('.parent')[0] ?? window
+  // console.log('scrollTop' in window)
+  // console.log('scrollTop' in document.documentElement)
+  // console.log('scrollTop' in document.body)
+  // console.log(window.nodeType)
+  // console.log(document.nodeType)
+  // console.log(document.documentElement.nodeType)
+  // console.log(document.body.nodeType)
+  // for (key in document) {
+  //   console.log(key)
+  // }
+  const $targets = $('.target')
+  const index = Math.floor(($targets.length - 1) / 2)
+  const target = $targets[index]
+  target.innerText = 'mid target'
+  // parent.scrollTop = 20000
+  // console.log(target.getBoundingClientRect().top)
+  // console.log(con.clientHeight)
+  // console.log(con.offsetHeight)
+  // console.log(con.scrollHeight)
+  // console.log('clientHeight: ' + parent.clientHeight)
+  // console.log('offsetHeight: ' + parent.offsetHeight)
+  // console.log('scrollHeight: ' + parent.scrollHeight)
+  // console.log('rectHeight: ' + parent.getBoundingClientRect().height)
+  function getElementTop(element) {
+    let actualTop = element.offsetTop;
+    let current = element.offsetParent;
+    while (current !== null) {
+      actualTop += current.offsetTop;
+      current = current.offsetParent;
+    }
+    return actualTop;
+  }
+  // const timeout = setTimeout(() => {
+  //   clearTimeout(timeout)
+  //   target.scrollIntoView({
+  //     behavior: 'smooth',
+  //     block: 'nearest'
+  //   })
+  // }, 1000)
+  // console.log(`init: ${target.getBoundingClientRect().top}`)
+  parent.addEventListener('scroll', () => {
+    if (timer) {
+      clearTimeout(timer)
+      timer = null
+    }
+    timer = setTimeout(() => {
+      // const { pageXoffset, pageYoffset, scrollX, scrollY } = window 
+      // // window获取超出视口的高度
+      // const scrollTop = document.documentElement.scrollTop ?? document.body.scrollTop
+      // console.log(scrollY)
+      // console.log(document.documentElement.scrollTop)
+      // console.log(window.scrollY)
+      // console.log(document.body.scrollTop)
+      // console.log(parent.scrollTop)
+      // console.log(`current: ${target.getBoundingClientRect().top}`)
+      // console.log(`scrollTop: ${parent.scrollTop}`)
+      // console.log(`total: ${target.getBoundingClientRect().top + parent.scrollTop}`)
+      console.log('offsetTop: ' + getElementTop(target))
+      console.log('Rect: ' + target.getBoundingClientRect().top)
+      console.log('Rect + Top: ' + (target.getBoundingClientRect().top + parent.scrollY))
+      console.log('--------------------------------------------------------------------------------------------')
+      clearTimeout(timer)
+      timer = null
+    }, 500)
+  })
+
+  /*
+    1. html默认滚动，html的滚动距离可以用 element.scrollTop获取，scrollTop没有兼容性
+    或者通过 window.scrollY获取，兼容ie浏览器用window.pageYoffset
+    2. 使用自定义的元素内滚动使用 element.scrollTop获取滚动距离
+    3. scrollTop 是一个可写属性, 可以设置为任何整数。是element类型的node上的一个属性，可以通过nodeType 获取对象的类型，可以通过scrollTop 为element类型的node设置向上卷曲的距离
+      另外：
+        + overflow：hidden 或者 这值了元素的non-scrollable scrollTop，0（也就是说这个属性只能给具有滚动能力的元素来使用，获取其向上卷曲的能力）
+        + 设置的scrollTop小于0，0
+        + 设置scrollTop的数值超过可滚动值，可滚动最大数值
+    4. element和window都有一下三种方法用来处理元素在视口中的位置：
+        scroll、scrollTo 滚动到，scrollBy 滚动了
+        参数接受两种类型(x, y)或者(scrollOptions)
+        scrollOptions: {
+          x,
+          y,
+          behavior: 'auto' 'smooth' smooth 平滑滚动 auto 默认滚动形式
+        }
+    5. element.scrollIntoView 接受两种参数
+        (alignToTop)
+        true: 顶部
+        false: 底部
+        ({
+          behavior: 'aotu' | 'smooth',
+          block: (纵轴) center end start nearest
+        })
+        scrollIntoViewIfNeeded 有兼容性，如果必要移动才会移动，Safari、 Chrome 和 Opera 实现了这个方法，可以兼容一下
+  */
+ /*
+    element的尺寸
+      1. offset 偏移量
+        offsetTop 是基于 offsetParent的位置来计算的
+        offsetParent： 
+          1. 最近的table、td、th、body或最近的定位元素
+          2. fixed的元素或者display：none的元素 offsetParent 为null
+        offsetHeight：包含元素的内容、padding、border 但是不包含margin
+        offsetTop：就是从元素的border到达offsetParent border 的距离
+        offset的相关属性都是只读属性，每次获取都需要重新计算
+        使用offset获取距离顶部的距离
+        function getElementTop(element) {
+          let actualTop = element.offsetTop;
+          let current = element.offsetParent;
+          while (current !== null) {
+            actualTop += current.offsetTop;
+            current = current.offsetParent;
+          }
+          return actualTop;
+        }
+      2. client 客户端尺寸
+        clientHeight：包含不带有滚动条的全部内容、padding
+        可以通过这个值来检测视口的尺寸：document.documentElement.clientHeight
+        这个属性返回的是元素的内部属性而不是元素内子元素的属性，比如：parent的高度是500px，child的高度是1000px，给parent设置overflow：auto，clientHeight的值应该是parent的高度，而不是parent内部child的高度。
+        client的相关属性都是只读属性，每次获取都需要重新计算
+      3. scroll 滚动尺寸
+      scrollHeight: 没有滚动条时的高度，也就是被内容撑开自适应的高度
+      scrollTop: 向上卷曲的高度
+
+      scrollHeight被解释为没有滚动条时候的属性也很奇怪，scrollHeight可以被解释为“当元素出现滚动条时，元素内部滚动部分的尺寸”
+
+      在没有滚动条的情况下，offsetHeight 是要比clientHeight和scrollHeight高度超出border的距离
+      在有滚动跳的时候 scrollHeight取的值是盒子内部整个滚动部分的高度
+
+      4. getBoundingClientRect
+        返回属性除了height、width其余属性都基于视口的左上角来计算的
+        top和y都是基于视口的位置计算的，如果当window出现滚动条的时候可以使用top/y + window.scrollY 就可以得到 元素基于顶部的距离
+
+        height: contentHeight + padding +  border
+      
+      5. IntersectionObserver 相关操作
+ */
+</script>
+</html>
